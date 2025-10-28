@@ -1,7 +1,11 @@
 import { useDispatch } from "react-redux"
 import { FcLike } from "react-icons/fc"
 import { FaRegHeart } from "react-icons/fa"
-import { deleteTodoThunk, likeTodoThunk, toggleTodoThunk } from "../../redux/todos/operations"
+import {
+  deleteTodoThunk,
+  likeTodoThunk,
+  toggleTodoThunk,
+} from "../../redux/todos/operations"
 
 export const TodoItem = ({ todo, openElement }) => {
   const dispatch = useDispatch()
@@ -10,7 +14,7 @@ export const TodoItem = ({ todo, openElement }) => {
   return (
     <div className='card bg-base-100 shadow-sm relative'>
       <div className='card-body'>
-        <div className='absolute top-2 right-2 flex gap-2 justify-start items-center'>
+        <div className='absolute top-2 right-2 flex gap-2 justify-start items-center cursor-pointer'>
           {todo.liked ? (
             <FcLike onClick={() => dispatch(likeTodoThunk(todo))} size={22} />
           ) : (

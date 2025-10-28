@@ -1,4 +1,12 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit"
+import { createSlice, isAnyOf, nanoid } from "@reduxjs/toolkit"
+import {
+  addTodoThunk,
+  deleteTodoThunk,
+  editTodoThunk,
+  fetchTodosThunk,
+  likeTodoThunk,
+  toggleTodoThunk,
+} from "./operations"
 
 const initialState = {
   todos: [],
@@ -10,59 +18,85 @@ export const slice = createSlice({
   initialState,
   selectors: {
     selectTodos: (state) => state.todos,
-    selectIsLoading: state=>state.isLoading,
-    selectIsError: state=>state.isError,
-
+    selectIsLoading: (state) => state.isLoading,
+    selectIsError: (state) => state.isError,
   },
-  reducers: {
-    addTodo: {
-      prepare: (todo) => {
-        return {
-          payload: {
-            todo,
-            id: nanoid(),
-            completed: false,
-            liked: false,
-          },
-        }
-      },
-      reducer: (state, { payload }) => {
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTodosThunk.fulfilled, (state, { payload }) => {
+        state.todos = payload
+      })
+      .addCase(addTodoThunk.fulfilled, (state, { payload }) => {
         state.todos.push(payload)
-      },
-    },
-    deleteTodo: (state, { payload }) => {
-      state.todos = state.todos.filter((todo) => todo.id !== payload)
-    },
-    toggleTodo: (state, { payload }) => {
-      const item = state.todos.find((item) => item.id === payload)
-      if (item) {
+      })
+      .addCase(deleteTodoThunk.fulfilled, (state, { payload }) => {
+        state.todos = state.todos.filter((item) => item.id !== payload)
+      })
+      .addCase(editTodoThunk.fulfilled, (state, { payload }) => {
+        state.todos.map((item) => (item.id === payload.id ? payload : item))
+      })
+      .addCase(toggleTodoThunk.fulfilled, (state, { payload }) => {
+        const item = state.todos.find((item) => item.id === payload.id)
         item.completed = !item.completed
-      }
-    },
-    toggleLiked: (state, { payload }) => {
-      const item = state.todos.find((todo) => todo.id === payload)
-      if (item) {
+      })
+      .addCase(likeTodoThunk.fulfilled, (state, { payload }) => {
+        const item = state.todos.find((item) => item.id === payload.id)
         item.liked = !item.liked
-      }
-    },
-    editTodo: (state, { payload }) => {
-      const itemIndex = state.todos.findIndex((todo) => todo.id === payload.id)
-      if (itemIndex !== -1) {
-        state.todos[itemIndex] = payload
-      }
-    },
-    fetchTodosSuccess: (state, { payload }) => {
-      state.todos = payload
-    },
-    isError: (state, { payload }) => {
-      state.isError = payload
-    },
-    isLoading: (state, { payload }) => {
-        state.isLoading = payload
-      }
+      })
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.pending,
+          deleteTodoThunk.pending,
+          editTodoThunk.pending,
+          toggleTodoThunk.pending,
+          likeTodoThunk.pending,
+          addTodoThunk.pending
+        ),
+        (state) => {
+          state.isLoading = true
+          state.isError = false
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.fulfilled,
+          deleteTodoThunk.fulfilled,
+          editTodoThunk.fulfilled,
+          toggleTodoThunk.fulfilled,
+          likeTodoThunk.fulfilled,
+          addTodoThunk.fulfilled
+        ),
+        (state) => {
+          state.isLoading = false
+          state.isError = false
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.rejected,
+          deleteTodoThunk.rejected,
+          editTodoThunk.rejected,
+          toggleTodoThunk.rejected,
+          likeTodoThunk.rejected,
+          addTodoThunk.rejected
+        ),
+        (state) => {
+          state.isLoading = false
+          state.isError = true
+        }
+      )
   },
 })
 export const todoReducer = slice.reducer
-export const { addTodo, deleteTodo, toggleLiked, toggleTodo, editTodo, fetchTodosSuccess, isError, isLoading } =
-  slice.actions
+export const {
+  addTodo,
+  deleteTodo,
+  toggleLiked,
+  toggleTodo,
+  editTodo,
+  fetchTodosSuccess,
+  isError,
+  isLoading,
+} = slice.actions
 export const { selectTodos, selectIsError, selectIsLoading } = slice.selectors

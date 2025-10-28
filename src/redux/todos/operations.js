@@ -1,92 +1,77 @@
 import axios from "axios"
-import {
-  addTodo,
-  deleteTodo,
-  editTodo,
-  fetchTodosSuccess,
-  isError,
-  isLoading,
-  toggleLiked,
-  toggleTodo,
-} from "./slice"
+import { createAsyncThunk } from "@reduxjs/toolkit"
 
 axios.defaults.baseURL = "https://664396276c6a65658707ade7.mockapi.io/"
+export const fetchTodosThunk = createAsyncThunk(
+  "todos/FetchAll",
+  async (_, thunkApi) => {
+    try {
+      const { data } = await axios.get("todos")
+      return data
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message)
+    }
+  }
+)
+export const deleteTodoThunk = createAsyncThunk(
+  "todos/DeleteTodo",
+  async (id, thunkApi) => {
+    try {
+      const { data } = await axios.delete(`todos/${id}`)
+      return data.id
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message)
+    }
+  }
+)
 
-export const fetchTodosThunk = () => async (dispatch) => {
-  try {
-    dispatch(isLoading(true))
-    const { data } = await axios.get("todos")
-    dispatch(fetchTodosSuccess(data))
-  } catch (e) {
-    console.log(e)
-    dispatch(isError(true))
-  } finally {
-    dispatch(isLoading(false))
+export const toggleTodoThunk = createAsyncThunk(
+  "todos/Toggle",
+  async (body, thunkApi) => {
+    try {
+      const { data } = await axios.put(`todos/${body.id}`, {
+        ...body,
+        completed: !body.completed,
+      })
+      return data
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message)
+    }
   }
-}
-
-export const deleteTodoThunk = (id) => async (dispatch) => {
-  try {
-    dispatch(isLoading(true))
-    dispatch(isError(false))
-    await axios.delete(`todos/${id}`)
-    dispatch(deleteTodo(id))
-  } catch (e) {
-    dispatch(isError(true))
-    console.log(e)
-  } finally {
-    dispatch(isLoading(false))
+)
+export const likeTodoThunk = createAsyncThunk(
+  "todos/Like",
+  async (body, thunkApi) => {
+    try {
+      const { data } = await axios.put(`todos/${body.id}`, {
+        ...body,
+        liked: !body.liked,
+      })
+      return data
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message)
+    }
   }
-}
-export const toggleTodoThunk = (body) => async (dispatch) => {
-  try {
-    dispatch(isLoading(true))
-    dispatch(isError(false))
-    await axios.put(`todos/${body.id}`, { ...body, completed: !body.completed })
-    dispatch(toggleTodo(body.id))
-  } catch (e) {
-    dispatch(isError(true))
-    console.log(e)
-  } finally {
-    dispatch(isLoading(false))
+)
+export const addTodoThunk = createAsyncThunk(
+  "todos/Add",
+  async (body, thunkApi) => {
+    try {
+      const { data } = await axios.post("todos", body)
+      return data
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message)
+    }
   }
-}
-export const likeTodoThunk = (body) => async (dispatch) => {
-  try {
-    dispatch(isLoading(true))
-    dispatch(isError(false))
-    await axios.put(`todos/${body.id}`, { ...body, liked: !body.liked })
-    dispatch(toggleLiked(body.id))
-  } catch (e) {
-    dispatch(isError(true))
-    console.log(e)
-  } finally {
-    dispatch(isLoading(false))
+)
+export const editTodoThunk = createAsyncThunk(
+  "todos/Edit",
+  async (body, thunkApi) => {
+    try {
+      const { data } = await axios.put(`todos/${body.id}`, body)
+      return data
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message)
+    }
   }
-}
-export const addTodoThunk = (body) => async (dispatch) => {
-  try {
-    dispatch(isLoading(true))
-    dispatch(isError(false))
-    const { data } = await axios.post("todos", body)
-    dispatch(addTodo(data))
-  } catch (e) {
-    dispatch(isError(true))
-    console.log(e)
-  } finally {
-    dispatch(isLoading(false))
-  }
-}
-export const editTodoThunk = (body) => async (dispatch) => {
-  try {
-    dispatch(isLoading(true))
-    dispatch(isError(false))
-    await axios.put(`todos/${body.id}`, body)
-    dispatch(editTodo(body))
-  } catch (e) {
-    dispatch(isError(true))
-    console.log(e)
-  } finally {
-    dispatch(isLoading(false))
-  }
-}
+)
