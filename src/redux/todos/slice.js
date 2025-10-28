@@ -34,7 +34,7 @@ export const slice = createSlice({
         state.todos = state.todos.filter((item) => item.id !== payload)
       })
       .addCase(editTodoThunk.fulfilled, (state, { payload }) => {
-        state.todos =state.todos.map((item) => (item.id === payload.id ? payload : item))
+        state.todos =state.todos.map((item) => (item.id === payload.id ? {...item, ...payload} : item))
       })
       .addCase(toggleTodoThunk.fulfilled, (state, { payload }) => {
         const item = state.todos.find((item) => item.id === payload.id)
