@@ -2,6 +2,7 @@ import axios from "axios"
 import {
   addTodo,
   deleteTodo,
+  editTodo,
   fetchTodosSuccess,
   isError,
   isLoading,
@@ -20,7 +21,7 @@ export const fetchTodosThunk = () => async (dispatch) => {
     console.log(e)
     dispatch(isError(true))
   } finally {
-    isLoading(false)
+    dispatch(isLoading(false))
   }
 }
 
@@ -76,10 +77,12 @@ export const addTodoThunk = (body) => async (dispatch) => {
     dispatch(isLoading(false))
   }
 }
-export const editTodoThunk = () => async (dispatch) => {
+export const editTodoThunk = (body) => async (dispatch) => {
   try {
     dispatch(isLoading(true))
     dispatch(isError(false))
+    await axios.put(`todos/${body.id}`, body)
+    dispatch(editTodo(body))
   } catch (e) {
     dispatch(isError(true))
     console.log(e)

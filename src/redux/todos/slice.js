@@ -10,6 +10,9 @@ export const slice = createSlice({
   initialState,
   selectors: {
     selectTodos: (state) => state.todos,
+    selectIsLoading: state=>state.isLoading,
+    selectIsError: state=>state.isError,
+
   },
   reducers: {
     addTodo: {
@@ -62,4 +65,4 @@ export const slice = createSlice({
 export const todoReducer = slice.reducer
 export const { addTodo, deleteTodo, toggleLiked, toggleTodo, editTodo, fetchTodosSuccess, isError, isLoading } =
   slice.actions
-export const { selectTodos } = slice.selectors
+export const { selectTodos, selectIsError, selectIsLoading } = slice.selectors
