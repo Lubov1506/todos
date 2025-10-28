@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+.active {
+  color: white;
+  background-color: teal;
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-weight: bold;
+}
+.aboutActive{
+  color: white;
+  font-weight: bold;
+}
