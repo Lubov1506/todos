@@ -4,7 +4,6 @@ import { changeFilter, selectTodosFilter } from "../../redux/todosFilter/slice"
 
 export const Filter = () => {
   const filter = useSelector(selectTodosFilter)
-  console.log(filter)
   const dispatch = useDispatch()
   return (
     <div className='flex gap-2 justify-center items-center'>

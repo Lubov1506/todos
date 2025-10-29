@@ -1,38 +1,35 @@
 import { useSelector } from "react-redux"
 import { TodoItem } from "./TodoItem"
-
 import { useState } from "react"
 import Modal from "../Modal/Modal"
 import EditTodoForm from "./EditTodoForm"
-import { selectTodos } from "../../redux/todos/slice"
-import { selectTodosFilter } from "../../redux/todosFilter/slice"
-import { getFilteredTodos } from "../../helpers/getFilteredTodos"
+import {
+  selectFilteredTodos,
+  selectFilteredTodosMemo,
+  selectUncompletedTodos,
+} from "../../redux/todos/selectors"
 
 export const List = () => {
-  const todos = useSelector(selectTodos)
-  const filter = useSelector(selectTodosFilter)
+  const todos = useSelector(selectFilteredTodosMemo)
 
-  const filteredTodos = getFilteredTodos(todos, filter)
-
-  //Modal
   const [isOpen, setIsOpen] = useState(false)
   const [editedTodo, setEditedTodo] = useState(null)
   const openElement = (todo) => {
     setEditedTodo(todo)
     setIsOpen(true)
   }
-  // console.log(filteredTodos);
-  
+  const uncompletedTodos = useSelector(selectUncompletedTodos)
   return (
     <div>
+      <p className="text-gray-700">Uncompleted: {uncompletedTodos}</p>
       <ul className='grid grid-cols-2 gap-2 p-3'>
-        {filteredTodos?.map((todo) => (
+        {todos?.map((todo) => (
           <TodoItem key={todo.id} todo={todo} openElement={openElement} />
         ))}
       </ul>
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
-          <EditTodoForm todo={editedTodo} onClose={() => setIsOpen(false)}/>
+          <EditTodoForm todo={editedTodo} onClose={() => setIsOpen(false)} />
         </Modal>
       )}
     </div>
