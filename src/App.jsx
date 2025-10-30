@@ -1,12 +1,39 @@
-import { TodosApp } from "./components/TodosApp/TodosApp"
-import { TodosAppRTKQuery } from "./components/TodosAppRTKQuery/TodosAppRTKQuery"
+import { lazy } from "react"
+import { Route, Routes } from "react-router-dom"
+import Layout from "./components/TodosApp/Layout"
+import PublicRoute from "./routes/PublicRoute"
+import Todos from "./pages/Todos"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import NotFound from "./pages/NotFound"
+import Home from "./pages/Home"
 
+const TodosApp = lazy(() => import("./components/TodosApp/TodosApp"))
 function App() {
   return (
-    <div className='flex flex-col gap-2 w-full min-h-screen  items-center bg-gray-200'>
-      <TodosAppRTKQuery/>
-      {/* <TodosApp/> */}
-    </div>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='todos' element={<Todos />} />
+        </Route>
+        <Route
+          path='/login'
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
   )
 }
 

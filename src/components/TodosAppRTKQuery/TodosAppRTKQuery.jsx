@@ -19,7 +19,7 @@ export const TodosAppRTKQuery = () => {
     )
   }
   return (
-    <div className=' bg-gray-200 min-h-screen min-w-full relative'>
+    <div className='min-h-screen min-w-full relative flex flex-col gap-2'>
       {isLoading && <Loader />}
       <Header />
       <AddTodo />

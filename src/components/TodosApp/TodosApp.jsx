@@ -25,9 +25,9 @@ export const TodosApp = () => {
     )
   }
   return (
-    <div className=' bg-gray-200 min-h-screen min-w-full relative'>
+    <div className='min-h-screen min-w-full relative'>
       {isLoading && <Loader />}
-      <Header />
+      {/* <Header /> */}
       <AddTodo />
       <Filter />
       <List />
