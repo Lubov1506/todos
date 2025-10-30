@@ -9,7 +9,7 @@ export const AddTodo = () => {
     options.resetForm()
   }
   return (
-    <div className='flex gap-2 justify-center items-center p-2'>
+    <div className='flex gap-2 justify-center items-center'>
       <Formik initialValues={{ todo: "" }} onSubmit={handleSubmit}>
         <Form className='flex gap-2'>
           <Field className='input' placeholder='enter todo...' name='todo' />

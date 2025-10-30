@@ -1,6 +1,8 @@
 @import "tailwindcss";
-@plugin "daisyui";
 
+@plugin "daisyui" {
+  themes: cupcake --default, business --prefersdark;
+}
 .active {
   color: white;
   background-color: teal;

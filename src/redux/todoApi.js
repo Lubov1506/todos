@@ -2,15 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const todoApi = createApi({
   reducerPath: "todoApi",
-  refetchOnFocus:true,
+  refetchOnFocus: true,
   refetchOnReconnect: true,
   tagTypes: ["todos"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://664396276c6a65658707ade7.mockapi.io/",
+    // baseUrl: "https://dummyjson.com/",
   }),
   endpoints: (builder) => ({
     fetchTodos: builder.query({
-      query: () => "todos",
+      query: () => `todos`,
+      // query: ({limit}) => `todos?limit=${limit}`,
       providesTags: ["todos"],
     }),
     addTodo: builder.mutation({
