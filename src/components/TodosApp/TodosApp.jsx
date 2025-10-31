@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useUser } from "../../store/hooks"
 import { AddTodo } from "./AddTodo"
-import { AuthForm } from "./AuthForm"
 import { Filter } from "./Filter"
 import { Header } from "./Header"
 import { List } from "./List"
@@ -19,14 +18,7 @@ export const TodosApp = () => {
     dispatch(fetchTodosThunk())
   }, [dispatch])
   const isLoading = useSelector(selectIsLoading)
-  const { isLoggedIn } = useUser()
-  if (!isLoggedIn) {
-    return (
-      <div className='w-full h-screen grid place-content-center'>
-        <AuthForm />
-      </div>
-    )
-  }
+
   return (
     <div className='min-h-screen min-w-full relative'>
       {isLoading && <Loader />}

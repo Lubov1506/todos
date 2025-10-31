@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import NavBar from "./NavBar"
-import { Header } from "../TodosAppRTKQuery/Header"
+import { Header } from "./Header"
 
 const Layout = () => {
   return (
