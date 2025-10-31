@@ -5,12 +5,15 @@ import { AuthForm } from "./AuthForm"
 import { Filter } from "./Filter"
 import { Header } from "./Header"
 import { List } from "./List"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { fetchTodosThunk } from "../../redux/todos/operations"
 import Loader from "./Loader"
 import { selectIsLoading } from "../../redux/todos/slice"
+import ToggleVisibility from "./ToggleVisibility"
 
 export const TodosApp = () => {
+  
+  const [visibility, setVisibility] = useState('grid-cols-3')
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchTodosThunk())
@@ -27,10 +30,13 @@ export const TodosApp = () => {
   return (
     <div className='min-h-screen min-w-full relative'>
       {isLoading && <Loader />}
-      {/* <Header /> */}
-      <AddTodo />
-      <Filter />
-      <List />
+      <div className='flex gap-3 justify-around flex-wrap'>
+        <AddTodo />
+        <Filter />
+        <ToggleVisibility setVisibility={setVisibility}/>
+      </div>
+
+      <List visibility={visibility} />
     </div>
   )
 }

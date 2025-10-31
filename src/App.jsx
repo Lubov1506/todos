@@ -8,7 +8,6 @@ import Register from "./pages/Register"
 import NotFound from "./pages/NotFound"
 import Home from "./pages/Home"
 
-const TodosApp = lazy(() => import("./components/TodosApp/TodosApp"))
 function App() {
   return (
       <Routes>

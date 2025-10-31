@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: dark --default, business --prefersdark;
+  themes: light --default, business --prefersdark;
 }
 .active {
   color: white;

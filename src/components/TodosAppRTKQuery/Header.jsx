@@ -6,13 +6,15 @@ export const Header = ({ children }) => {
     logout,
   } = useUser()
   return (
-    <div className='flex w-full justify-between px-2 py-1 items-center text-2xl text-white bg-gray-700'>
+    <div className='flex sticky top-0 w-full justify-between p-2 items-center text-2xl text-white bg-gray-700'>
       <h2>TODO APP</h2>
-      <p>{name || "name"}</p>
       {children}
-      <button className='btn ' onClick={logout}>
-        Logout
-      </button>
+      <div className='flex gap-2 items-center'>
+        <p>{name || "name"}</p>
+        <button className='btn ' onClick={logout}>
+          Logout
+        </button>
+      </div>
     </div>
   )
 }

@@ -8,8 +8,9 @@ import {
   selectFilteredTodosMemo,
   selectUncompletedTodos,
 } from "../../redux/todos/selectors"
+import clsx from "clsx"
 
-export const List = () => {
+export const List = ({visibility}) => {
   const todos = useSelector(selectFilteredTodosMemo)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -22,7 +23,7 @@ export const List = () => {
   return (
     <div>
       <p className="text-gray-700">Uncompleted: {uncompletedTodos}</p>
-      <ul className='grid grid-cols-2 gap-2 p-3'>
+      <ul className={clsx('grid gap-2 p-3', visibility)}>
         {todos?.map((todo) => (
           <TodoItem key={todo.id} todo={todo} openElement={openElement} />
         ))}
