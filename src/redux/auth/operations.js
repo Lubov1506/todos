@@ -19,9 +19,7 @@ export const loginThunk = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const { data } = await todosApi.post("users/login", credentials)
-      
       setToken(data.token)
-      console.log(data.token)
       return data
     } catch (err) {
       console.log(err)
@@ -45,7 +43,6 @@ export const refreshThunk = createAsyncThunk(
   "auth/refresh",
   async (credentials, thunkApi) => {
     const token = thunkApi.getState().auth.token
-    console.log(token); 
     if(!token){
       return thunkApi.rejectWithValue('no token')
     }

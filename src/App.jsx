@@ -8,17 +8,20 @@ import Register from "./pages/Register"
 import NotFound from "./pages/NotFound"
 import Home from "./pages/Home"
 import { PrivateRoute } from "./routes/PrivateRoute"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { refreshThunk } from "./redux/auth/operations"
+import { selectIsRefreshing } from "./redux/auth/slice"
+import RefreshLoader from "./components/TodosApp/RefreshLoader"
 
 function App() {
+  const isRefreshing = useSelector(selectIsRefreshing)
   const dispatch = useDispatch()
   useEffect(() => {
-    console.log('refresh');
-    
     dispatch(refreshThunk())
   }, [dispatch])
-  return (
+  return isRefreshing ? (
+    <RefreshLoader />
+  ) : (
     <Routes>
       <Route
         path='/'
