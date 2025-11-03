@@ -1,4 +1,4 @@
-import { lazy } from "react"
+import { lazy, useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import Layout from "./components/TodosApp/Layout"
 import PublicRoute from "./routes/PublicRoute"
@@ -8,8 +8,16 @@ import Register from "./pages/Register"
 import NotFound from "./pages/NotFound"
 import Home from "./pages/Home"
 import { PrivateRoute } from "./routes/PrivateRoute"
+import { useDispatch } from "react-redux"
+import { refreshThunk } from "./redux/auth/operations"
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    console.log('refresh');
+    
+    dispatch(refreshThunk())
+  }, [dispatch])
   return (
     <Routes>
       <Route

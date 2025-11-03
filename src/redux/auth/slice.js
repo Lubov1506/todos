@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { loginThunk, logoutThunk, registerThunk } from "./operations"
+import { loginThunk, logoutThunk, refreshThunk, registerThunk } from "./operations"
 import { isAnyOf } from "@reduxjs/toolkit"
 
 const initialState = {
@@ -34,6 +34,10 @@ const slice = createSlice({
       })
       .addCase(logoutThunk.fulfilled, (state, { payload }) => {
         return initialState
+      })
+      .addCase(refreshThunk.fulfilled, (state, {payload})=>{
+        state.user = payload
+        state.isLoggedIn = true
       })
       .addMatcher(
         isAnyOf(registerThunk.pending, loginThunk.pending),

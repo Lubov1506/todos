@@ -19,9 +19,9 @@ export const loginThunk = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const { data } = await todosApi.post("users/login", credentials)
-      console.log(data.token);
       
       setToken(data.token)
+      console.log(data.token)
       return data
     } catch (err) {
       console.log(err)
@@ -33,8 +33,25 @@ export const logoutThunk = createAsyncThunk(
   "auth/logout",
   async (credentials, thunkApi) => {
     try {
-      const {data} = await todosApi.post('users/logout', )
+      const { data } = await todosApi.post("users/logout")
       clearToken()
+      return data
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message)
+    }
+  }
+)
+export const refreshThunk = createAsyncThunk(
+  "auth/refresh",
+  async (credentials, thunkApi) => {
+    const token = thunkApi.getState().auth.token
+    console.log(token); 
+    if(!token){
+      return thunkApi.rejectWithValue('no token')
+    }
+    setToken(token)
+    try {
+      const { data } = await todosApi.get("users/current")
       return data
     } catch (err) {
       return thunkApi.rejectWithValue(err.message)
