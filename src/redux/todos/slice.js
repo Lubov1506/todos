@@ -7,6 +7,7 @@ import {
   likeTodoThunk,
   toggleTodoThunk,
 } from "./operations"
+import { logoutThunk } from "../auth/operations"
 
 const initialState = {
   todos: [],
@@ -34,7 +35,9 @@ export const slice = createSlice({
         state.todos = state.todos.filter((item) => item.id !== payload)
       })
       .addCase(editTodoThunk.fulfilled, (state, { payload }) => {
-        state.todos =state.todos.map((item) => (item.id === payload.id ? {...item, ...payload} : item))
+        state.todos = state.todos.map((item) =>
+          item.id === payload.id ? { ...item, ...payload } : item
+        )
       })
       .addCase(toggleTodoThunk.fulfilled, (state, { payload }) => {
         const item = state.todos.find((item) => item.id === payload.id)
@@ -43,6 +46,9 @@ export const slice = createSlice({
       .addCase(likeTodoThunk.fulfilled, (state, { payload }) => {
         const item = state.todos.find((item) => item.id === payload.id)
         item.liked = !item.liked
+      })
+      .addCase(logoutThunk.fulfilled, (state, { payload }) => {
+        return initialState
       })
       .addMatcher(
         isAnyOf(
