@@ -11,10 +11,7 @@ const Register = () => {
     password: "",
   }
   const handleSubmit = (values, options) => {
-    console.log(values)
-    dispatch(
-      registerThunk(values)
-    )
+    dispatch(registerThunk(values))
     options.resetForm()
   }
   return (
@@ -60,9 +57,12 @@ const Register = () => {
                   />
                 </label>
                 <div>
-                  <Link to='/login' className='link link-hover'>
-                    You already have an account? Login!
-                  </Link>
+                  <p>
+                    You already have an account?
+                    <Link to='/login' className='link link-hover'>
+                      Login!
+                    </Link>
+                  </p>
                 </div>
                 <button className='btn btn-neutral mt-4 ' type='submit'>
                   Register

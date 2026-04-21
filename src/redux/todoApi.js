@@ -7,12 +7,10 @@ export const todoApi = createApi({
   tagTypes: ["todos"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://664396276c6a65658707ade7.mockapi.io/",
-    // baseUrl: "https://dummyjson.com/",
   }),
   endpoints: (builder) => ({
     fetchTodos: builder.query({
       query: () => `todos`,
-      // query: ({limit}) => `todos?limit=${limit}`,
       providesTags: ["todos"],
     }),
     addTodo: builder.mutation({

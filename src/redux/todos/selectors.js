@@ -5,7 +5,6 @@ import { createSelector } from "@reduxjs/toolkit"
 export const selectFilteredTodos = (state) => {
   const todos = selectTodos(state)
   const filter = selectTodosFilter(state)
-  console.log("filter is done")
 
   switch (filter) {
     case "all": {
@@ -47,6 +46,5 @@ export const selectFilteredTodosMemo = createSelector(
 )
 
 export const selectUncompletedTodos = createSelector([selectTodos], (todos) => {
-
   return todos.reduce((total, item) => total + !item.completed, 0)
 })

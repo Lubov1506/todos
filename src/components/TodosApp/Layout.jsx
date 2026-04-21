@@ -13,7 +13,6 @@ const Layout = () => {
       <div className=' w-full overflow-y-scroll'>
         <Outlet />
       </div>
-
     </div>
   )
 }

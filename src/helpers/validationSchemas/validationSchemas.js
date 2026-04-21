@@ -40,5 +40,5 @@ export const petFormRHFSchema = yup.object().shape({
     .integer()
     .max(18, "Age can not be more than 18"),
   phone: yup.string().min(10, "can't be less than 10"),
-  gender: yup.string().required().oneOf(['Male', 'Female'])
+  gender: yup.string().required().oneOf(["Male", "Female"]),
 })

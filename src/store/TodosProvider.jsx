@@ -15,7 +15,7 @@ export const TodosProvider = ({ children }) => {
       { id: nanoid(), todo, completed: false, liked: false },
     ])
   }
-  const contextValue = { todos, deleteTodo, addTodo  }
+  const contextValue = { todos, deleteTodo, addTodo }
   return (
     <TodosContext.Provider value={contextValue}>
       {children}

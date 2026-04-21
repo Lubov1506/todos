@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import { motion, scale } from "motion/react"
 import { ImCross } from "react-icons/im"
 const Modal = ({ children, title = "Default modal", onClose }) => {
   const handleBackDropClick = (e) => {
@@ -16,17 +15,8 @@ const Modal = ({ children, title = "Default modal", onClose }) => {
     }
     document.addEventListener("keydown", handleKeyDown)
 
-    // const intervalId = setInterval(() => {
-    //   console.log("interval")
-    // }, 1000)
-    // const timeoutId = setTimeout(() => {
-    //   console.log("timeout")
-    // }, 3000)
-
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
-      // clearInterval(intervalId)
-      // clearTimeout(timeoutId)
     }
   }, [onClose])
   return (
@@ -40,7 +30,6 @@ const Modal = ({ children, title = "Default modal", onClose }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -1400, transition: { duration: 0.5 } }}
       >
-        {/* <h1 className='text-center text-lg'>{title}</h1> */}
         <button
           onClick={onClose}
           className='absolute right-4  flex justify-center items-center w-7 h-7 cursor-pointer hover:scale-110 transition-all'

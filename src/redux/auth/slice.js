@@ -77,4 +77,5 @@ const slice = createSlice({
   },
 })
 export const authReducer = slice.reducer
-export const { selectUser, selectToken, selectIsLoggedIn, selectIsRefreshing } = slice.selectors
+export const { selectUser, selectToken, selectIsLoggedIn, selectIsRefreshing } =
+  slice.selectors

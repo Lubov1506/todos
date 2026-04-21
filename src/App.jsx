@@ -1,6 +1,6 @@
 import { lazy, useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
-import Layout from "./components/TodosApp/Layout"
+
 import PublicRoute from "./routes/PublicRoute"
 import Todos from "./pages/Todos"
 import Login from "./pages/Login"
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { refreshThunk } from "./redux/auth/operations"
 import { selectIsRefreshing } from "./redux/auth/slice"
 import RefreshLoader from "./components/TodosApp/RefreshLoader"
+import Layout from "./components/TodosApp/Layout"
 
 function App() {
   const isRefreshing = useSelector(selectIsRefreshing)
