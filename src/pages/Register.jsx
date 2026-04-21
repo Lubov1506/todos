@@ -20,9 +20,8 @@ const Register = () => {
         <div className='text-center lg:text-left'>
           <h1 className='text-5xl font-bold'>Register!</h1>
           <p className='py-6'>
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Start planning for your success today. Create an account to
+            structure your tasks and achieve more every day.
           </p>
         </div>
         <div className='card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl'>
@@ -57,7 +56,7 @@ const Register = () => {
                   />
                 </label>
                 <div>
-                  <p>
+                  <p className="flex gap-1">
                     You already have an account?
                     <Link to='/login' className='link link-hover'>
                       Login!

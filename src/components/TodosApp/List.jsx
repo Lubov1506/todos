@@ -3,10 +3,7 @@ import { TodoItem } from "./TodoItem"
 import { useState } from "react"
 import Modal from "../Modal/Modal"
 import EditTodoForm from "./EditTodoForm"
-import {
-  selectFilteredTodosMemo,
-  selectUncompletedTodos,
-} from "../../redux/todos/selectors"
+import { selectFilteredTodosMemo } from "../../redux/todos/selectors"
 import clsx from "clsx"
 
 export const List = ({ visibility }) => {
@@ -18,14 +15,16 @@ export const List = ({ visibility }) => {
     setEditedTodo(todo)
     setIsOpen(true)
   }
-  const uncompletedTodos = useSelector(selectUncompletedTodos)
   return (
     <div>
-      <p className='text-gray-700'>Uncompleted: {uncompletedTodos}</p>
       <ul className={clsx("grid gap-2 p-3", visibility)}>
-        {todos?.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} openElement={openElement} />
-        ))}
+        {todos.length > 0 ? (
+          todos.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} openElement={openElement} />
+          ))
+        ) : (
+          <p className='text-center text-lg text-gray-500'>No todos found</p>
+        )}
       </ul>
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
